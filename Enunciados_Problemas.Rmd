@@ -1,0 +1,38 @@
+---
+title: "Enunciado_Problemas"
+author: "PAULA FERNÁNEZ MACÍAS (78137222N)"
+date: "2024-10-10"
+output:
+  pdf_document: default
+  html_document: default
+---
+## ENUNCIADO PROBLEMAS / TEORÍA DE LA DECISIÓN / TRABAJO INDIVIDUAL
+
+#PAULA FERNÁNDEZ MACÍAS
+
+PROBLEMA 1
+Una empresa está considerando invertir en tres posibles proyectos: 
+Proyecto A, Proyecto B y Proyecto C. 
+La empresa no sabe cuál de tres posibles estados del mercado ocurrirá: Estado 1, Estado 2 o Estado 3. Cada estado tiene diferentes rendimientos (ganancias o pérdidas) asociados con los proyectos, pero no se conoce la probabilidad de que ocurran estos estados.
+
+La siguiente tabla de decisión resume las ganancias o pérdidas estimadas (en miles de dólares) de cada proyecto en cada uno de los estados del mercado:
+
+```{r}
+source("teoriadecision_funciones_incertidumbre.R")
+tb1 = crea.tablaX(c(100, 150, -50,
+                  80, 200, 100,
+                  50, -100, 250), numalternativas = 3, numestados = 3)
+```
+
+PROBLEMA 2
+Una empresa de software ha desarrollado un nuevo programa y tiene dos opciones para lanzarlo al mercado:
+
+1. Vender los derechos del software a una gran empresa tecnológica por un pago fijo de 50,000 euros.
+2. Lanzar el software por su cuenta, incurriendo en un coste inicial de 120,000 euros por desarrollo y marketing, pero ganando 5 euros por cada unidad vendida.
+
+La empresa no está segura de cómo reaccionará el mercado y tiene dos posibles escenarios:
+- Éxito en ventas: Se venderán 40,000 unidades del software.
+- Fracaso en ventas: Solo se venderán 10,000 unidades.
+La empresa quiere tomar una decisión entre vender los derechos o lanzar el software por su cuenta, pero no sabe qué escenario del mercado ocurrirá.
+
+¿Debe la empresa aceptar la oferta de vender los derechos del software o lanzarlo por su cuenta?
