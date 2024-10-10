@@ -1,0 +1,160 @@
+---
+title: "Problemas_Resueltos"
+author: "PAULA FERNÁNEZ MACÍAS (78137222N)"
+date: "2024-10-10"
+output: html_document
+---
+## PROBLEMAS RESUELTOS / TEORÍA DE LA DECISIÓN / TRABAJO INDIVIDUAL
+
+#PAULA FERNÁNDEZ MACÍAS
+
+PROBLEMA 1
+Una empresa está considerando invertir en tres posibles proyectos: 
+Proyecto A, Proyecto B y Proyecto C. 
+La empresa no sabe cuál de tres posibles estados del mercado ocurrirá: Estado 1, Estado 2 o Estado 3. Cada estado tiene diferentes rendimientos (ganancias o pérdidas) asociados con los proyectos, pero no se conoce la probabilidad de que ocurran estos estados.
+
+La siguiente tabla de decisión resume las ganancias o pérdidas estimadas (en miles de dólares) de cada proyecto en cada uno de los estados del mercado:
+
+```{r}
+source("teoriadecision_funciones_incertidumbre.R")
+tb1 = crea.tablaX(c(100, 150, -50,
+                  80, 200, 100,
+                  50, -100, 250), numalternativas = 3, numestados = 3)
+```
+
+CASO FAVORABLE:
+```{r}
+#WALD:
+s01_wald = criterio.Wald(tb1, T)
+s01_wald     
+names(s01_wald$AlternativaOptima) 
+```
+la mejor opción es el proyecto B, ya que elegimos el maximo
+```{r}
+#CRITERIO OPTIMISTA:
+s01_opt = criterio.Optimista(tb1, T)
+s01_opt
+s01_opt$ValorAlternativas
+s01_opt$AlternativaOptima    
+```
+En este caso, el proyecto elegido sería el C
+```{r}
+#HURWICZ:
+s01_hurwicz = criterio.Hurwicz(tb1, alfa = 0.5, T)
+s01_hurwicz
+s01_hurwicz$ValorAlternativas
+s01_hurwicz$AlternativaOptima     
+```
+Sale ganador el proyecto B
+```{r}
+#LAPLACE:
+s01_lp = criterio.Laplace(tb1, T)
+s01_lp
+s01_lp$AlternativaOptima    
+```
+Proyecto B, la mejor decisión
+```{r}
+#PUNTO IDEAL:
+s01_pi = criterio.PuntoIdeal(tb1, T)
+s01_pi$ValorAlternativas
+s01_pi$AlternativaOptima      
+```
+Proyecto B
+```{r}
+#SAVAGE:
+s01_savage = criterio.Savage(tb1, T)
+s01_savage
+s01_savage$ValorAlternativas
+s01_savage$AlternativaOptima
+```
+El PROYECTO B es la mejor opción menos en el criterio optimista,
+por tanto, podríamos decir que el PROYECTO B es la mejor decisión en condiciones de incertidumbre,
+en el caso FAVORABLE.
+Vamos a utilizar la representación gráfica de uno de los modelos vistos, el modelo de Hurwicz:
+```{r}
+dibuja.criterio.Hurwicz(tb1, T)
+```
+
+CASO DESFAVORABLE:
+```{r}
+#WALD:
+s01_waldF = criterio.Wald(tb1, F)
+s01_waldF   
+names(s01_waldF$AlternativaOptima)
+```
+La mejor opción es el proyecto A, ya que elegimos el mínimo.
+```{r}
+#CRITERIO OPTIMISTA:
+s01_optF = criterio.Optimista(tb1, F)
+s01_optF
+s01_optF$ValorAlternativas
+s01_optF$AlternativaOptima   
+```
+En este caso, el proyecto elegido sería el C
+```{r}
+#HURWICZ:
+s01_hurwiczF = criterio.Hurwicz(tb1, alfa = 0.5, F)
+s01_hurwiczF
+s01_hurwiczF$ValorAlternativas
+s01_hurwiczF$AlternativaOptima     
+```
+Sale ganador el proyecto A
+```{r}
+#LAPLACE:
+s01_lpF = criterio.Laplace(tb1, F)
+s01_lpF
+s01_lpF$AlternativaOptima    
+```
+Proyecto A ó el Proyecto C, nos encontramos ante un empate de decisión
+```{r}
+#PUNTO IDEAL:
+s01_piF = criterio.PuntoIdeal(tb1, F)
+s01_piF$ValorAlternativas
+s01_piF$AlternativaOptima   
+```
+Proyecto A
+```{r}
+#SAVAGE:
+s01_savageF = criterio.Savage(tb1, F)
+s01_savageF
+s01_savageF$ValorAlternativas
+s01_savageF$AlternativaOptima     
+```
+Proyecto A
+
+En el caso DESFAVORABLE, elegir el Proyecto A es la mejor decisión, 
+aunque en el caso óptimo y en LaPlace nos indiquen como mejor ópción el proyecto C.
+
+
+PROBLEMA 2
+Una empresa de software ha desarrollado un nuevo programa y tiene dos opciones para lanzarlo al mercado:
+
+1. Vender los derechos del software a una gran empresa tecnológica por un pago fijo de 50,000 euros.
+2. Lanzar el software por su cuenta, incurriendo en un coste inicial de 120,000 euros por desarrollo y marketing, pero ganando 5 euros por cada unidad vendida.
+
+La empresa no está segura de cómo reaccionará el mercado y tiene dos posibles escenarios:
+- Éxito en ventas: Se venderán 40,000 unidades del software.
+- Fracaso en ventas: Solo se venderán 10,000 unidades.
+La empresa quiere tomar una decisión entre vender los derechos o lanzar el software por su cuenta, pero no sabe qué escenario del mercado ocurrirá.
+
+¿Debe la empresa aceptar la oferta de vender los derechos del software o lanzarlo por su cuenta?
+```{r}
+#OPCIÓN 1:    #la ganancia es fija por lo tanto, 50000 euros
+#OPCIÓN 2:
+Exito = 40000*5 - 120000    #euros
+Fracaso  = 10000*5 - 120000     #euros
+#TABLA DE DECISIÓN:
+tb2 = crea.tablaX(c(50000, 50000,
+                    Exito, Fracaso), 2, 2)
+rownames(tb2) = c("Vender derechos", "Lanzar por su cuenta")
+#aplicamos criterios de incertidumbre:
+sol2 = criterio.Todos(tb2, 0.5, T)
+sol2
+```
+Vamos a  ver gráficamente:  (criterio Hurwicz)
+```{r}
+dibuja.criterio.Hurwicz(tb2)
+```
+La mejor opción es VENDER los derechos del software.
+Esta opción es la favorable en todos los criterios menos en el criterio óptimo; 
+ya que ofrece seguridad y evita pérdidas potenciales en caso de fracaso en ventas.
